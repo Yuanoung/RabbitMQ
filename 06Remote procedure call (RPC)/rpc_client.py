@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 # coding: utf-8
+import sys
 import pika
 import uuid
 
@@ -71,6 +72,8 @@ class FibonacciRpcClient(object):
 
 fibonacci_rpc = FibonacciRpcClient()
 
-print(" [x] Requesting fib(30)")
-response = fibonacci_rpc.call(30)
+print(sys.argv)
+number = sys.argv[1] if len(sys.argv) > 1 else 30
+print(" [x] Requesting fib(%s)".format(number))
+response = fibonacci_rpc.call(number)
 print(" [.] Got %r" % (response,))
