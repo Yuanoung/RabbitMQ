@@ -32,11 +32,11 @@ channel.queue_declare(queue='hello')
 当我们获取到消息的时候，Pika库就会调用此回调函数。
 这个回调函数会将接收到的消息内容输出到屏幕上。
 """
+
+
 def callback(ch, method, properties, body):
-    print(" [ch] %r" % ch)
-    print(" [method] %r" % method)
-    print(" [properties] %r" % properties)
     print(" [x] Received %r" % body)
+
 
 # 下一步，我们需要告诉RabbitMQ这个回调函数将会从名为"hello"的队列中接收消息：
 channel.basic_consume(callback,

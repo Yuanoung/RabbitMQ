@@ -27,7 +27,6 @@ if not severities:
 我们之前使用过的扇型交换机（fanout exchanges）会忽略这个值。
 """
 for severity in severities:
-    print(severity)
     channel.queue_bind(exchange='direct_logs',
                        queue=queue_name,
                        routing_key=severity)

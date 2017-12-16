@@ -21,13 +21,10 @@ channel = connection.channel()
 我们将会使用直连交换机（direct exchange）来代替。
 路由的算法很简单 —— 交换机将会对绑定键（binding key）和路由键（routing key）进行精确匹配，从而确定消息该分发到哪个队列。
 在这个场景中，我们可以看到直连交换机 X和两个队列进行了绑定。
-第一个队列使用orange作为绑定键，第二个队列有两个绑定，一个使用black作为绑定键，另外一个使用green。
+第一个队列使用orange作为绑定键;第二个队列有两个绑定，一个使用black作为绑定键，另外一个使用green。
 这样以来，当路由键为orange的消息发布到交换机，就会被路由到队列Q1。
 路由键为black或者green的消息就会路由到Q2。其他的所有消息都将会被丢弃。
-在这个场景中，我们可以看到直连交换机 X和两个队列进行了绑定。
-第一个队列使用orange作为绑定键，第二个队列有两个绑定，一个使用black作为绑定键，另外一个使用green。
-这样以来，当路由键为orange的消息发布到交换机，就会被路由到队列Q1。
-路由键为black或者green的消息就会路由到Q2。其他的所有消息都将会被丢弃。
+
 多个绑定（Multiple bindings）
 多个队列使用相同的绑定键是合法的。
 这个例子中，我们可以添加一个X和Q1之间的绑定，使用black绑定键。
@@ -44,7 +41,6 @@ channel.exchange_declare(exchange='direct_logs',
 我们先假设“severity”的值是info、warning、error中的一个。
 """
 severity = sys.argv[1] if len(sys.argv) > 1 else 'info'
-print(severity, sys.argv)
 message = ' '.join(sys.argv[2:]) or 'Hello World!'
 channel.basic_publish(exchange='direct_logs',
                       routing_key=severity,
