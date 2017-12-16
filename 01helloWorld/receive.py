@@ -20,9 +20,9 @@ channel = connection.channel()
 列出所有队列:
 你也许希望查看RabbitMQ中有哪些队列、有多少消息在队列中。
 此时你可以使用rabbitmqctl工具（使用有权限的用户）：
-    sudo rabbitmqctl list_queues
+    `sudo rabbitmqctl list_queues`
 （在Windows中不需要sudo命令）
-    rabbitmqctl list_queues
+    `rabbitmqctl list_queues`
 """
 channel.queue_declare(queue='hello')
 
