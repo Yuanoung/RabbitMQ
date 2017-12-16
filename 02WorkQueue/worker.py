@@ -30,7 +30,7 @@ print(' [*] Waiting for messages. To exit press CTRL+C')
 一个很容易犯的错误就是忘了basic_ack，后果很严重。
 消息在你的程序退出之后就会重新发送，如果它不能够释放没响应的消息，RabbitMQ就会占用越来越多的内存。
 为了排除这种错误，你可以使用rabbitmqctl命令，输出messages_unacknowledged字段：
-$ sudo rabbitmqctl list_queues name messages_ready messages_unacknowledged
+    `sudo rabbitmqctl list_queues name messages_ready messages_unacknowledged`
 """
 
 
@@ -44,11 +44,13 @@ def callback(ch, method, properties, body):
 """
 公平调度
 你应该已经发现，它仍旧没有按照我们期望的那样进行分发。
-比如有两个工作者（workers），处理奇数消息的比较繁忙，处理偶数消息的比较轻松。然而RabbitMQ并不知道这些，它仍然一如既往的派发消息。
-这时因为RabbitMQ只管分发进入队列的消息，不会关心有多少消费者（consumer）没有作出响应。它盲目的把第n-th条消息发给第n-th个消费者。
+比如有两个工作者（workers），处理奇数消息的比较繁忙，处理偶数消息的比较轻松。
+然而RabbitMQ并不知道这些，它仍然一如既往的派发消息。
+这时因为RabbitMQ只管分发进入队列的消息，不会关心有多少消费者（consumer）没有作出响应。
+它盲目的把第n-th条消息发给第n-th个消费者。
 
 我们可以使用basic.qos方法，并设置prefetch_count=1。
-这样是告诉RabbitMQ，再同一时刻，不要发送超过1条消息给一个工作者（worker），直到它已经处理了上一条消息并且作出了响应。
+这样是告诉RabbitMQ，在同一时刻，不要发送超过1条消息给一个工作者（worker），直到它已经处理了上一条消息并且作出了响应。
 这样，RabbitMQ就会把消息分发给下一个空闲的工作者（worker）。
 
 关于队列大小
